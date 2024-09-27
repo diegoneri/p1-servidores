@@ -2,11 +2,14 @@ package com.fatecrl.api_pagamentos.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,5 +50,28 @@ public class PagamentoController {
 
         return ResponseEntity.created(location)
                             .body(novoPagamento);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Pagamento> statusUpdate(@PathVariable("id") Long id, @RequestBody Map<String, String> statusMap) {
+
+        String status = statusMap.get("status");
+
+        boolean updated = service.statusUpdate(id, status);
+
+        if (updated) {
+            Pagamento pagamentoAtualizado = service.getById(id);
+            return ResponseEntity.ok(pagamentoAtualizado);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Pagamento> delete(@PathVariable("id") Long id){
+        if (service.delete(id)){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
