@@ -51,6 +51,13 @@ public class PagamentoService {
                 .toList();
     }
 
+    public List<Pagamento> getPagamentosByValor(Double valorMinimo, Double valorMaximo) {
+        return listaDePagamentos.stream()
+                .filter(p -> (valorMinimo == null || p.getValor() >= valorMinimo) &&
+                             (valorMaximo == null || p.getValor() <= valorMaximo))
+                .toList();
+    }
+
     public boolean delete(Long id){
         Pagamento pagamento = this.getById(id);
         if (pagamento != null){
