@@ -64,9 +64,9 @@ public class PagamentoController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Pagamento> statusUpdate(@PathVariable("id") Long id, @RequestBody Map<String, String> statusMap) {
+    public ResponseEntity<Pagamento> statusUpdate(@PathVariable("id") Long id, @RequestBody Pagamento pagamento) {
 
-        String status = statusMap.get("status");
+        String status = pagamento.getStatus();
 
         boolean updated = service.statusUpdate(id, status);
 

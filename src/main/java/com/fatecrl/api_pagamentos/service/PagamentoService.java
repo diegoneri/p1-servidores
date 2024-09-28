@@ -19,7 +19,7 @@ public class PagamentoService {
         pagamentoFake.setValor(15.5);
         pagamentoFake.setFormaPagamento("Cartão de crédito");
         pagamentoFake.setStatus("Aprovado");
-        LocalDate data = LocalDate.parse("2024-09-26");
+        LocalDate data = LocalDate.parse("2024-09-26"); //LocalDate.now()
         pagamentoFake.setDataPagamento(data);
         listaDePagamentos.add(pagamentoFake);
     }
